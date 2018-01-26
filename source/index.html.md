@@ -19,11 +19,7 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+Welcome to the PSA API! You can use our API to easily create a retrieve records in Salesforce.
 
 # Authentication
 
@@ -43,8 +39,8 @@ api = kittn.authorize('meowmeowmeow')
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl "/api/services/apexrest/API_NAME/v1/OBJECT"
+  -H "token: myToken"
 ```
 
 ```javascript
@@ -53,16 +49,35 @@ const kittn = require('kittn');
 let api = kittn.authorize('meowmeowmeow');
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+> Replace API_NAME with the relevent service. Possible values are `schema` or `record`
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+> Replace `myToken` with your own token generated from the concatenation of your client Id, secret and unix time.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+To access API resources, every request must be accompanied with a token. This token can be generated using a hashing alogorithm based upon some API user credentials. 
 
-`Authorization: meowmeowmeow`
+Please register for your API credentials by visiting PSA-API.force.com/register.
+
+To generate a token, please follow these steps:
+
+### Step 1
+
+Concatenate your Client Id, Secret and Unix Timestamp
+
+`client_id=CLIENT&secret=SECRET&timestamp=<unix time goes here>`
+
+### Step 2
+
+Use HMAC-SHA1 hashing algorithm to generate a token.
+
+e.g `23e9c493028ba6bacd2dd0c1e59db4d857c12e4e`
+
+### Step 3
+
+In your request headers, add a parameter `token`
+
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>CLIENT</code> and <code>SECRET</code> with your personal client Id and Secret
 </aside>
 
 # Kittens
